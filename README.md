@@ -1,31 +1,29 @@
-# Linear Regression Model Conclusion
+# Midterm Exam
 
-The linear regression model using "Playing Hours" as a single predictor demonstrates very weak predictive power. The model's Mean Squared Error (MSE) and low R² score of 0.04 indicate that only 4% of the variance in grades can be explained by playing hours alone. The scatter plot visualization shows a wide dispersion of points around the regression line which
-indicates that "Playing Hours" alone is not a strong predictor of grades, and other factors likely
-play a significant role.
+### 1. Does preprocessing affect the result of the model? Why?
 
-# Multiple Linear Regression Model Conclusion
+Yes, preprocessing significantly affects how well the model works. Here's a simpler explanation:
 
-The multiple linear regression model, incorporating several features, shows an improvement over the single-variable linear regression. The R² score on the test data is 0.2557, indicating that approximately 25.57% of the variance in grades is explained by the included features. The scatter plot visualization reveals an interesting pattern: the actual grades (blue) align perfectly along the diagonal "Perfect Fit" line, while the predicted grades (red) display considerable scatter around this line, particularly in the higher grade ranges (60-90+). This suggests that the model struggles with predicting grades that are below 60. The sorted feature coefficients shows the relative impact of each feature on grade prediction. "Mother Education" and "Father Education" have positive coefficients, suggesting a positive correlation with grades, while "Playing Games" has a negative coefficient, indicating negative correlation. Although this model performs better than the single-variable model, the scattered prediction points indicate that there is still a significant portion of the variance in grades that remains unexplained, suggesting that additional factors or a more complex model might be needed for better predictive accuracy.
+First, the model needs complete data to learn effectively. If important information is missing, the model might not work correctly or could produce misleading results. This project addresses missing data by either filling in the gaps (for example, by using an average value if a house's building area isn't listed) or by removing entries if they have too much critical information missing. These choices directly shape the data the model learns from.
 
-# Answers to Questions about the Dataset and Linear Regression
+Second, machine learning models generally work with numbers rather than text. Therefore, details like suburb names or property types are converted into numerical codes that the model can understand. Without this conversion, the model couldn't use this valuable information. The specific method used for this conversion can also influence the model's performance.
 
-## 1. Why did you choose this dataset?
+Third, it's important to ensure that all types of information (features) are on a relatively similar scale. For instance, house prices can be very large numbers, while the number of rooms is a small number. Feature scaling adjusts these features so they are in a comparable range. This prevents features with initially larger values from unfairly dominating the model's learning process. In the case of clustering houses, scaling helps ensure that groups are formed based on the overall similarity of properties, not just because one feature (like price) had much larger numbers than another (like distance to the city center).
 
-The dataset "gameandgrade.csv" was chosen because I am also a gamer and it is interesting to explore the relationship between various factors related to gaming habits and academic performance (grades). The dataset includes features such as "Playing Hours," "Playing Games," parental education and revenue, and other factors that could potentially influence a student's grade. This allows for an analysis of how well these gaming-related variables can predict or explain the variance in student grades, making it an interesting dataset.
+Finally, preprocessing also helps in managing unusual or extreme data points, often called outliers (e.g., a house that is exceptionally expensive or inexpensive for its area compared to others). Techniques used for handling missing data and for scaling features can also help lessen the distorting impact of these outliers, leading to a more robust and reliable model.
 
-## 2. What is your conclusion upon conducting linear regression on this dataset?
+In summary, preprocessing steps like cleaning data, transforming features, and scaling are essential for preparing the data into a suitable format for the model, improving its accuracy, and ensuring reliable results.
 
-After conducting linear regression analysis, the conclusion is that while there is some degree of correlation between the features in the dataset and the grades, the models have limited predictive power. The simple linear regression model, using only "Playing Hours," explains only a small fraction of the variance in grades, as indicated by a low R² score. The multiple linear regression model, which incorporates several features, shows an improvement but still leaves a significant portion of the variance unexplained. This suggests that gaming habits, parental education, and revenue, as represented in this dataset, are not strong predictors of academic performance when used in a linear regression model. Other factors not included in the dataset might play a more significant role in determining student grades.
+### 2. What is your conclusion based on the interpretation or result of your model?
 
-## 3. How relevant is linear regression today?
+- **Linear Regression Model (Visualized in "Actual vs. Predicted Housing Prices" image):**
 
-Linear regression remains highly relevant today, despite its simplicity compared to more complex machine learning algorithms. It is still widely used for several reasons:
+  - The scatter plot shows a positive correlation between actual and predicted prices, indicating some predictive power. Many points cluster around the "Perfect Fit" line.
+  - However, there's noticeable variance, especially for higher-priced houses. The model seems to under-predict some very high-priced properties, suggesting precision could be improved. (The specific MSE and R2 scores from the notebook would provide a more quantitative assessment).
 
-- **Interpretability:** Linear regression models are easy to interpret, providing clear insights into the relationship between predictors and the target variable.
-- **Baseline Model:** It's useful baseline model to compare against more complex algorithms.
-- **Simplicity:** Linear regression is computationally efficient and easy to implement, making it suitable for quick analyses.
-- **Foundation:** It forms the foundation for more advanced techniques, such as generalized linear models and regularization methods.
-- **Specific Use Cases:** In scenarios where the relationship between variables is approximately linear, and interpretability is important, linear regression is the preferred choice.
-
-While it may not always provide the highest accuracy for complex, nonlinear relationships, its simplicity, interpretability, and efficiency makes it still relevant today.
+- **KMeans Clustering Model (Visualized in "KMeans Clusters: Price vs. Distance (K = 3)" image):**
+  - The model clusters the housing data into 3 distinct groups based on 'Price' and 'Distance':
+    - **Cluster 0 (Purple on the graph):** Represents properties with **lower prices** (mostly below 2 million) and located at **shorter distances** (primarily under a distance of 15). This group shows a high density of properties.
+    - **Cluster 1 (Teal/Dark Green on the graph):** This cluster is diverse, encompassing properties across a **wide range of prices**, from lower values up to the **overall highest-priced properties in the dataset** (reaching near 10 million). These properties mostly found within a distance of 0-20.
+    - **Cluster 2 (Yellow on the graph):** This cluster primarily consists of properties with **lower prices** (many below 2 million). Its distinguishing feature is that these properties are generally located at **further distances** (mostly between distances of 10 and 45).
+  - **Interpretation:** The KMeans clustering helps identify distinct market segments. For instance, Cluster 0 might represent more affordable, centrally-located properties. Cluster 2 could signify properties in more suburban or outlying areas that are generally more affordable but can reach mid-range prices. Cluster 1 captures a broad mix, including the most premium-priced properties irrespective of their exact distance. This segmentation can be valuable for understanding market structure, targeted real estate strategies, or identifying specific investment opportunities.
